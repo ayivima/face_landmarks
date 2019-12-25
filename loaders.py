@@ -21,29 +21,33 @@ data_transform = transforms.Compose([
     ToTensor()
 ])
 
-train_dataset = FacialLandmarksDataset(
-    keypoints_file='/data/training_frames_keypoints.csv',
-    images_dir='/data/training/',
-    transforms=data_transform
-)
+def train_dataset(transforms_pipe=data_transform):
+    return FacialLandmarksDataset(
+        keypoints_file='/data/training_frames_keypoints.csv',
+        images_dir='/data/training/',
+        transforms=transforms_pipe
+    )
 
-test_dataset = FacialLandmarksDataset(
-    keypoints_file='/data/test_frames_keypoints.csv',
-    images_dir='/data/test/',
-    transforms=data_transform
-)
+def test_dataset(transforms_pipe=data_transform):
+    return FacialLandmarksDataset(
+        keypoints_file='/data/test_frames_keypoints.csv',
+        images_dir='/data/test/',
+        transforms=transforms_pipe
+    )
 
-trainloader = lambda batch_size: DataLoader(
-    train_dataset, 
-    batch_size=batch_size,
-    shuffle=True
-)
+def trainloader(batch_size=10): 
+    return DataLoader(
+        train_dataset, 
+        batch_size=batch_size,
+        shuffle=True
+    )
 
-testloader = lambda batch_size: DataLoader(
-    test_dataset, 
-    batch_size=batch_size,
-    shuffle=True
-)
+def testloader(batch_size=10): 
+    return DataLoader(
+        test_dataset, 
+        batch_size=batch_size,
+        shuffle=True
+    )
 
 def dataloaders(batch_size=10):
     """Returns loaders for training and testing data."""
@@ -52,3 +56,4 @@ def dataloaders(batch_size=10):
         trainloader(batch_size),
         testloader(batch_size)
     )
+
