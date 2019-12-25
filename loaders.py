@@ -3,7 +3,7 @@ Implements loaders for training and testing data.
 """
 
 from torch.utils.data import DataLoader
-from torchvision import transforms, utils
+from torchvision.transforms import Compose
 
 from dataset import FacialLandmarksDataset
 from transformations import (
@@ -14,7 +14,10 @@ from transformations import (
 )
 
 
-data_transform = transforms.Compose([
+__author__ = "Victor mawusi Ayi <ayivima@hotmail.com>"
+
+
+data_transform = Compose([
     Rescale(250),
     RandomCrop(224), 
     Normalize(), 
