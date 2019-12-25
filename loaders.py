@@ -33,19 +33,22 @@ test_dataset = FacialLandmarksDataset(
     transforms=data_transform
 )
 
+trainloader = lambda batch_size: DataLoader(
+    train_dataset, 
+    batch_size=batch_size,
+    shuffle=True
+)
+
+testloader = lambda batch_size: DataLoader(
+    test_dataset, 
+    batch_size=batch_size,
+    shuffle=True
+)
+
 def dataloaders(batch_size=10):
     """Returns loaders for training and testing data."""
-
-    trainloader = DataLoader(
-        train_dataset, 
-        batch_size=batch_size,
-        shuffle=True
-    )
-
-    testloader = DataLoader(
-        test_dataset, 
-        batch_size=batch_size,
-        shuffle=True
-    )
     
-    return trainloader, testloader
+    return (
+        trainloader(batch_size),
+        testloader(batch_size)
+    )
