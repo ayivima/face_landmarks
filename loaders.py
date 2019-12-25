@@ -37,14 +37,14 @@ def test_dataset(transforms_pipe=data_transform):
 
 def trainloader(batch_size=10): 
     return DataLoader(
-        train_dataset, 
+        train_dataset(), 
         batch_size=batch_size,
         shuffle=True
     )
 
 def testloader(batch_size=10): 
     return DataLoader(
-        test_dataset, 
+        test_dataset(), 
         batch_size=batch_size,
         shuffle=True
     )
