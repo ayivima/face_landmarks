@@ -53,8 +53,10 @@ def fit(
                 avg_running_loss = running_loss/100
                 # Print average loss at end of every 100 batches
                 print('Epoch: {}, Batch: {}, Avg. Loss: {}'.format(
-                    epoch + 1, batch_i + 1, avg_running_loss
+                    epoch+1, batch_i+1, avg_running_loss
                 ))
+                
+                running_loss = 0.0
                 
                 # Implement learning rate change dynamically
                 if dynamic_lr:
@@ -67,11 +69,9 @@ def fit(
                     elif avg_running_loss<0.030 and rate_switch<3:
                         optimizer.param_groups[0]['lr']=1e-10
                         rate_switch=3
-                
-                 running_loss = 0.0
-              
-              if batch_i == 0:
-                 print("Started Training")
+
+                if batch_i == 0:
+                    print("Started Training")
         
         if dynamic_lr:
             print("Learning Rate:", optimizer.param_groups[0]['lr'])
