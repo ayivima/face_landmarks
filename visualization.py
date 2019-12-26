@@ -27,11 +27,11 @@ def plotter(
     
     # set up function for plotting keypoints
     pointsplot = lambda axiz, pts, color: axiz.scatter(
-                pts[:, 0], 
-                pts[:, 1], 
-                s=20, 
-                marker='.', 
-                c=color
+        pts[:, 0], 
+        pts[:, 1], 
+        s=20, 
+        marker='.', 
+        c=color
     )
     
     for ax_ in axs:
