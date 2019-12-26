@@ -24,7 +24,9 @@ def fit(
         
         running_loss = 0.0
         model.train()
-
+        
+        print("Started Training")
+        
         for batch_i, data in enumerate(train_loader):
 
             # Get and prepare images and 
@@ -69,18 +71,15 @@ def fit(
                     elif avg_running_loss<0.030 and rate_switch<3:
                         optimizer.param_groups[0]['lr']=1e-10
                         rate_switch=3
-
-                if batch_i == 0:
-                    print("Started Training")
         
         if dynamic_lr:
             print("Learning Rate:", optimizer.param_groups[0]['lr'])
         
         train_losses.append(avg_running_loss)
         
-        # =========================
-        # Get Average Test Loss on 
-        # =========================
+        # =============================================
+        # Get Average Loss on a subset of Training data
+        # =============================================
         
         model.eval()
         total_batches = 0
