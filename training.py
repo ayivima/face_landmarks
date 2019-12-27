@@ -41,9 +41,14 @@ def fit(
     
     rate_switch=0
     train_losses, test_losses = [], []
+    
     if model_save:
         min_val_loss = inf
         save_epoch = 0
+    
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+    
     print("Started Training")
     
     for epoch in range(1, epochs+1):
@@ -56,6 +61,9 @@ def fit(
             # Get and prepare images and 
             # their corresponding keypoints
             images, key_pts = data
+            
+            images = images.to(device)
+            key_pts = key_pts.to(device)
 
             key_pts = key_pts.view(key_pts.size(0), -1)
             key_pts = key_pts.type(torch.FloatTensor)
@@ -108,8 +116,10 @@ def fit(
         total_batches = 0
         total_test_loss = 0
         for images, key_pts in test_loader:
-
+            
             total_batches += 1
+
+            images = images.to(device)
 
             key_pts = key_pts.view(key_pts.size(0), -1)
             key_pts = key_pts.type(torch.FloatTensor)
