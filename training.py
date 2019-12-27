@@ -77,8 +77,8 @@ def fit(
         batch_num = batch_i + 1
         avg_running_loss = running_loss/batch_num
         # Print average loss at end of all 346 batches
-        print('Epoch: {}, Batch Count: {}, Avg. Training Loss: {}'.format(
-            epoch, batch_num, avg_running_loss
+        print('Epoch: {}/{}, Batch Count: {}, Avg. Training Loss: {}'.format(
+            epoch, epochs, batch_num, avg_running_loss
         ))
 
 
