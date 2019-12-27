@@ -39,10 +39,12 @@ def fit(
     
     rate_switch=0
     train_losses, test_losses = [], []
-    if model_save: min_val_loss = inf
+    if model_save:
+        min_val_loss = inf
+        save_epoch = 0
     print("Started Training")
     
-    for epoch in range(epochs):
+    for epoch in range(1, epochs+1):
         
         running_loss = 0.0
         model.train()
@@ -69,16 +71,18 @@ def fit(
             # Print loss statistics
             # and implement learning rate change
             running_loss += loss.item()
-
-        # Calculate and Print average loss at end of all batches
+            
+            
+            #if batch_i % 346 == 345:
         batch_num = batch_i + 1
         avg_running_loss = running_loss/batch_num
+        # Print average loss at end of all 346 batches
         print('Epoch: {}, Batch Count: {}, Avg. Training Loss: {}'.format(
-            epoch+1, batch_num, avg_running_loss
+            epoch, batch_num, avg_running_loss
         ))
 
 
-        # Implementing learning rate change dynamically
+        # Implement learning rate change dynamically
         if dynamic_lr:
             if avg_running_loss<0.04 and rate_switch==0:
                 optimizer.param_groups[0]['lr']=1e-4
@@ -116,7 +120,7 @@ def fit(
             loss = criterion(output_pts, key_pts)
             total_test_loss += loss
             
-            # Break at the 200th image, keypoints pair
+            # Break at the 100th image, keypoints pair
             if total_batches == 200: break
         
         avg_val_loss = total_test_loss / total_batches    
@@ -128,8 +132,9 @@ def fit(
         if model_save:
             if avg_val_loss_item < min_val_loss:
                 min_val_loss = avg_val_loss_item
+                save_epoch = epoch
                 torch.save(model.state_dict(), save_name)
 
-    print('Finished Training')
+    print('Finished Training. Best model saved at Epoch {}'.format(save_epoch))
     
     return train_losses, test_losses
