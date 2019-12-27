@@ -1,8 +1,10 @@
 """Implements a function for training model."""
 
 
-import torch
 from math import inf
+import time
+
+import torch
 
 
 __author__ = "Victor Mawusi Ayi <ayivima@hotmail.com>"
@@ -45,7 +47,7 @@ def fit(
     print("Started Training")
     
     for epoch in range(1, epochs+1):
-        
+        starttime = time.time()
         running_loss = 0.0
         model.train()
                 
@@ -134,7 +136,16 @@ def fit(
                 min_val_loss = avg_val_loss_item
                 save_epoch = epoch
                 torch.save(model.state_dict(), save_name)
-
+        
+        est_comp = (time.time() - starttime) * (epochs - epoch)
+        est_comp_hrs = int(est_comp / 3600)
+        est_comp_mins = (est_comp - (est_comp_hrs*3600)) % 60
+        print(
+            "\t Estimated Completion Time: {} hours, {} minutes".format(
+                est_comp_hrs, est_comp_mins
+            )
+        )
+    
     print('Finished Training. Best model saved at Epoch {}'.format(save_epoch))
     
     return train_losses, test_losses
