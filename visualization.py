@@ -16,11 +16,25 @@ def plotter(
     test_loader, 
     plotrows=5, 
     plotcolumns=8, 
-    showactual=False, 
+    showactual=False,
+    figsize=(17,10),
     batch_size=10
 ):
+    """Displays images with an overlay of predicted keypoints, 
+    and (optionally) actual kepoints.
     
-    f, axs = plt.subplots(plotrows, plotcolumns, figsize=(17,10))
+    Arguments
+    ---------
+    :model: A trained (or untrained) model 
+    :test_loader: A generator for loading image and keypoint data 
+    :plotrows: The number of rows for image plotting 
+    :plotcolumns: The number of columns for image plotting, 
+    :showactual: Specifies whether actual keypoints should be plotted 
+                in addition to predicted keypoints,
+    :figsize: The size of the plot   
+    """
+    
+    f, axs = plt.subplots(plotrows, plotcolumns, figsize=figsize)
     
     # Convert test_loader into an iterator
     test_loader = iter(test_loader)
