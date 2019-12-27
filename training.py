@@ -42,11 +42,16 @@ def fit(
     rate_switch=0
     train_losses, test_losses = [], []
     
+    # Set up for GPU use if applicable
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    fltTensor = (
+        torch.cuda.FloatTensor if torch.cuda.is_available() else torch.FloatTensor
+    )
+    
     if model_save:
         min_val_loss = inf
         save_epoch = 0
     
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     
     print("Started Training")
@@ -66,8 +71,8 @@ def fit(
             key_pts = key_pts.to(device)
 
             key_pts = key_pts.view(key_pts.size(0), -1)
-            key_pts = key_pts.type(torch.FloatTensor)
-            images = images.type(torch.FloatTensor)
+            key_pts = key_pts.type(fltTensor)
+            images = images.type(fltTensor)
 
             # Forward Pass
             output_pts = model(images)
@@ -122,8 +127,8 @@ def fit(
             images = images.to(device)
 
             key_pts = key_pts.view(key_pts.size(0), -1)
-            key_pts = key_pts.type(torch.FloatTensor)
-            images = images.type(torch.FloatTensor)
+            key_pts = key_pts.type(fltTensor)
+            images = images.type(fltTensor)
 
             # Forward Pass
             output_pts = model(images)
