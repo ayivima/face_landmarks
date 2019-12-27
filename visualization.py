@@ -10,6 +10,12 @@ import numpy as np
 
 __author__ = "Victor Mawusi Ayi <ayivima@hotmail.com>"
 
+
+# Set up for GPU use
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+fltTensor = (
+    torch.cuda.FloatTensor if torch.cuda.is_available() else torch.FloatTensor
+)
         
 def plotter(
     model, 
@@ -35,6 +41,7 @@ def plotter(
     """
     
     f, axs = plt.subplots(plotrows, plotcolumns, figsize=figsize)
+    model = model.to(device)
     
     # Convert test_loader into an iterator
     test_loader = iter(test_loader)
@@ -55,7 +62,7 @@ def plotter(
         # > Obtain model predictions for image
         # > Flatten keypoints
         images, gt_pts = test_loader.next()
-        images = images.type(torch.FloatTensor)
+        images = images.type(fltTensor)
         output_pts = model(images)
         output_pts = output_pts.view(output_pts.size()[0], 68, -1)
 
@@ -63,6 +70,11 @@ def plotter(
             
             # Convert image to numpy image
             # and convert it to numpy image format
+            
+            if torch.cuda.is_available():   
+                images = images.cpu()
+                output_pts = output_pts.cpu()
+                
             image = images[i].data.numpy()
             image = np.transpose(image, (1, 2, 0))
 
