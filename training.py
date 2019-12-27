@@ -69,18 +69,16 @@ def fit(
             # Print loss statistics
             # and implement learning rate change
             running_loss += loss.item()
-            
-            
-            #if batch_i % 346 == 345:
+
+        # Calculate and Print average loss at end of all batches
         batch_num = batch_i + 1
         avg_running_loss = running_loss/batch_num
-        # Print average loss at end of all 346 batches
         print('Epoch: {}, Batch Count: {}, Avg. Training Loss: {}'.format(
             epoch+1, batch_num, avg_running_loss
         ))
 
 
-        # Implement learning rate change dynamically
+        # Implementing learning rate change dynamically
         if dynamic_lr:
             if avg_running_loss<0.04 and rate_switch==0:
                 optimizer.param_groups[0]['lr']=1e-4
@@ -118,7 +116,7 @@ def fit(
             loss = criterion(output_pts, key_pts)
             total_test_loss += loss
             
-            # Break at the 100th image, keypoints pair
+            # Break at the 200th image, keypoints pair
             if total_batches == 200: break
         
         avg_val_loss = total_test_loss / total_batches    
