@@ -55,6 +55,9 @@ def plotter(
         c=color
     )
     
+    # convert a array to matrix with 1 row
+    if len(axs.shape) == 1: axs = axs.reshape(1, -1)
+    
     for ax_ in axs:
         
         # > Get next batch of images and keypoints
