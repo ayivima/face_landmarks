@@ -1,7 +1,18 @@
 # Facial Landmarks Detection
 
-Implemented and trained a Conolutional Neural Network to predict facial landmarks.
+###### Victor Mawusi Ayi
 
+Implemented and trained a Convolutional Neural Network to predict facial landmarks.
+
+## Contents
+
+Find out more about this project from these links below:
+
++ [First Training Round](training1/Model_Training_and_Evaluation.md)
+
++ [Second Training Round](training2/model_training2.md)
+
++ [Inference/Predictions with Best Trained Model](inference/inference.md)
 
 ## Inference Showcase
 
