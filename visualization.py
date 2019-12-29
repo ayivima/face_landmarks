@@ -24,20 +24,22 @@ def plotter(
     plotcolumns=8, 
     showactual=False,
     figsize=(17,10),
-    batch_size=10
+    markersize=20
 ):
     """Displays images with an overlay of predicted keypoints, 
     and (optionally) actual kepoints.
     
     Arguments
     ---------
-    :model: A trained (or untrained) model 
-    :test_loader: A generator for loading image and keypoint data 
-    :plotrows: The number of rows for image plotting 
-    :plotcolumns: The number of columns for image plotting, 
+    :model: A trained (or untrained) model.
+    :test_loader: A generator for loading image and keypoint data.
+    :plotrows: The number of rows for image plotting.
+    :plotcolumns: The number of columns for image plotting. 
+                  Value must not exceed the batch size of the test loader.
     :showactual: Specifies whether actual keypoints should be plotted 
-                in addition to predicted keypoints,
-    :figsize: The size of the plot   
+                 in addition to predicted keypoints.
+    :figsize: The size of the plot.
+    :markersize: The size of markers used for keypoint coordinates.
     """
     
     f, axs = plt.subplots(plotrows, plotcolumns, figsize=figsize)
@@ -50,12 +52,11 @@ def plotter(
     pointsplot = lambda axiz, pts, color: axiz.scatter(
         pts[:, 0], 
         pts[:, 1], 
-        s=20, 
+        s=markersize, 
         marker='.', 
         c=color
     )
     
-    # convert a array to matrix with 1 row
     if len(axs.shape) == 1: axs = axs.reshape(1, -1)
     
     for ax_ in axs:
