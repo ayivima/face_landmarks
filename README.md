@@ -16,7 +16,7 @@ Find out more about this project from these links below:
 
 + [Inference/Predictions with Best Trained Model after Second Training Round](inference/inference.md)
 
-+ [Inference/Predictions with Best Trained Model after Third Training Round](inference2/inference.md)
++ [Inference/Predictions with Best Trained Model after Third Training Round](inference2/inference2.md)
 
 ## Inference Showcase
 
