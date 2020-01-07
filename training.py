@@ -86,9 +86,7 @@ def fit(
             # Print loss statistics
             # and implement learning rate change
             running_loss += loss.item()
-            
-            
-            #if batch_i % 346 == 345:
+
         batch_num = batch_i + 1
         avg_running_loss = running_loss/batch_num
         # Print average loss at end of all 346 batches
@@ -133,11 +131,11 @@ def fit(
             # Forward Pass
             output_pts = model(images)
             
-            # Backpropagation
+            # Loss calculation
             loss = criterion(output_pts, key_pts)
             total_test_loss += loss
             
-            # Break at the 100th image, keypoints pair
+            # Break at the 200th image, keypoints pair
             if total_batches == 200: break
         
         avg_val_loss = total_test_loss / total_batches    
